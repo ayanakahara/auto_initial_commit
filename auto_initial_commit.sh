@@ -16,6 +16,14 @@ if [ $CURRENT_BRANCH = $1 ] ; then
 
     # log
     git log
+
+    read -p "Push? (y/n): " answer
+    case "$answer" in 
+        [yY]*) git push origin HEAD; hub pull-request -m "$1" -l meeting task: feature -a ayanakahara -F - --edit < ../auto_initial_commit/.github/PULL_REQUEST_TEMPLATE.md -o;;
+        
+        *) echo "no push." ; exit ;; 
+    esac
+
 else
     echo "Oh.. you can not make a branch :(";
 fi
